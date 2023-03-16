@@ -155,12 +155,14 @@ Events added and update return the record value and envent deleted return record
 Your request need to be added in your Ksaar workflow.<br>
 You need to add <b>x-auth</b> parameter in your hearder request.
 <table style="width: 100%">
+    <caption>:white_check_mark: Done&nbsp;&nbsp;&nbsp;&nbsp;:x: Not planned&nbsp;&nbsp;&nbsp;&nbsp;:first_quarter_moon: Planned</caption>
     <header>
         <tr>
             <td><b>Name</b></td>
             <td style="text-align: center;"><b>Method</b></td>
             <td><b>Header</b></td>
             <td>Response</td>
+            <td style="width: 5%;">&nbsp;</td>
         </tr>
     </header>
     <tbody>
@@ -169,12 +171,14 @@ You need to add <b>x-auth</b> parameter in your hearder request.
             <td style="text-align: center;"><span style="border-radius: 20px; display: inline-block; padding-left: 8px; padding-right: 8px; text-align: center; background-color: #20807D; color: #FFFFFF; font-weight: bold;">POST</span></td>
             <td>x-auth</td>
             <td>The record added</td>
+            <td>:white_check_mark:</td>
         </tr>
         <tr>
             <td>Row Updated</td>
             <td style="text-align: center;"><span style="border-radius: 20px; display: inline-block; padding-left: 8px; padding-right: 8px; text-align: center; background-color: #20807D; color: #FFFFFF; font-weight: bold;">POST</span></td>
             <td>x-auth</td>
             <td>The record updated</td>
+            <td>:white_check_mark:</td>
         </tr>
         <tr>
             <td>Row Deleted</td>
@@ -182,12 +186,9 @@ You need to add <b>x-auth</b> parameter in your hearder request.
             <td>x-auth</td>
             <td>
                 The record id : <br>
-                <code>
-                    {
-                        "rowId": &lt;record id&gt;
-                    }
-                </code>
+                <code>{ "rowId": &lt;record id&gt; }</code>
             </td>
+            <td>:white_check_mark:</td>
         </tr>
     </tbody>
 </table>
