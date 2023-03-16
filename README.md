@@ -161,6 +161,7 @@ You need to add <b>x-auth</b> parameter in your hearder request.
             <td><b>Name</b></td>
             <td style="text-align: center;"><b>Method</b></td>
             <td><b>Header</b></td>
+            <td><b>Body</b></td>
             <td>Response</td>
             <td style="width: 5%;">&nbsp;</td>
         </tr>
@@ -170,6 +171,7 @@ You need to add <b>x-auth</b> parameter in your hearder request.
             <td>Row Added</td>
             <td style="text-align: center;"><span style="border-radius: 20px; display: inline-block; padding-left: 8px; padding-right: 8px; text-align: center; background-color: #20807D; color: #FFFFFF; font-weight: bold;">POST</span></td>
             <td>x-auth</td>
+            <td><code>{ "rowId": &lt;record id&gt; }</code></td>
             <td>The record added</td>
             <td>:white_check_mark:</td>
         </tr>
@@ -177,6 +179,7 @@ You need to add <b>x-auth</b> parameter in your hearder request.
             <td>Row Updated</td>
             <td style="text-align: center;"><span style="border-radius: 20px; display: inline-block; padding-left: 8px; padding-right: 8px; text-align: center; background-color: #20807D; color: #FFFFFF; font-weight: bold;">POST</span></td>
             <td>x-auth</td>
+            <td><code>{ "rowId": &lt;record id&gt; }</code></td>
             <td>The record updated</td>
             <td>:white_check_mark:</td>
         </tr>
@@ -184,6 +187,7 @@ You need to add <b>x-auth</b> parameter in your hearder request.
             <td>Row Deleted</td>
             <td style="text-align: center;"><span style="border-radius: 20px; display: inline-block; padding-left: 8px; padding-right: 8px; text-align: center; background-color: #20807D; color: #FFFFFF; font-weight: bold;">POST</span></td>
             <td>x-auth</td>
+            <td><code>{ "rowId": &lt;record id&gt; }</code></td>
             <td>
                 The record id : <br>
                 <code>{ "rowId": &lt;record id&gt; }</code>
