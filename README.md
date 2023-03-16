@@ -40,13 +40,13 @@
             <td colspan="4">Users</td>
         </tr>
         <tr>
-            <td>Get a user's information</td>
+            <td>Get a user information</td>
             <td style="text-align: center;"><span style="border-radius: 20px; display: inline-block; padding-left: 8px; padding-right: 8px; text-align: center; background-color: #6ad0dd; color: #383838;  font-weight: bold;">GET</span></td>
             <td>/v1/users/<span style="color: #20807d;">{id}</span></td>
             <td>:white_check_mark:</td>
         </tr>
         <tr>
-            <td>Update a user's information</td>
+            <td>Update a user information</td>
             <td style="text-align: center;"><span style="border-radius: 20px; display: inline-block; padding-left: 8px; padding-right: 8px; text-align: center; background-color: #20807D; color: #FFFFFF; font-weight: bold;">PATCH</span></td>
             <td>/v1/users/<span style="color: #20807d;">{id}</span></td>
             <td>:first_quarter_moon:</td>
@@ -61,25 +61,25 @@
             <td>:white_check_mark:</td>
         </tr>
         <tr>
-            <td>Get application's workflows</td>
+            <td>Get application workflows</td>
             <td style="text-align: center;"><span style="border-radius: 20px; display: inline-block; padding-left: 8px; padding-right: 8px; text-align: center; background-color: #6ad0dd; color: #383838;  font-weight: bold;">GET</span></td>
             <td>/v1/applications/<span style="color: #20807d;">{id}</span>/workflows</td>
             <td>:white_check_mark:</td>
         </tr>
         <tr>
-            <td>Get application's users</td>
+            <td>Get application users</td>
             <td style="text-align: center;"><span style="border-radius: 20px; display: inline-block; padding-left: 8px; padding-right: 8px; text-align: center; background-color: #6ad0dd; color: #383838;  font-weight: bold;">GET</span></td>
             <td>/v1/applications/<span style="color: #20807d;">{id}</span>/users</td>
             <td>:white_check_mark:</td>
         </tr>
         <tr>
-            <td>Get application's user by email</td>
+            <td>Get application user by email</td>
             <td style="text-align: center;"><span style="border-radius: 20px; display: inline-block; padding-left: 8px; padding-right: 8px; text-align: center; background-color: #6ad0dd; color: #383838;  font-weight: bold;">GET</span></td>
             <td>/v1/applications/<span style="color: #20807d;">{id}</span>/users/email/<span style="color: #20807d;">{email}</span></td>
             <td>:white_check_mark:</td>
         </tr>
         <tr>
-            <td>Get application user's fields</td>
+            <td>Get application user fields</td>
             <td style="text-align: center;"><span style="border-radius: 20px; display: inline-block; padding-left: 8px; padding-right: 8px; text-align: center; background-color: #6ad0dd; color: #383838;  font-weight: bold;">GET</span></td>
             <td>/v1/applications/<span style="color: #20807d;">{id}</span>/users/fields</td>
             <td>:white_check_mark:</td>
@@ -88,13 +88,13 @@
             <td colspan="4">Worflows</td>
         </tr>
         <tr>
-            <td>Get workflow's records</td>
+            <td>Get workflow records</td>
             <td style="text-align: center;"><span style="border-radius: 20px; display: inline-block; padding-left: 8px; padding-right: 8px; text-align: center; background-color: #6ad0dd; color: #383838;  font-weight: bold;">GET</span></td>
             <td>/v1/workflows/<span style="color: #20807d;">{id}</span>/records</td>
             <td>:white_check_mark:</td>
         </tr>
         <tr>
-            <td>Get workflow's fields</td>
+            <td>Get workflow fields</td>
             <td style="text-align: center;"><span style="border-radius: 20px; display: inline-block; padding-left: 8px; padding-right: 8px; text-align: center; background-color: #6ad0dd; color: #383838;  font-weight: bold;">GET</span></td>
             <td>/v1/workflows/<span style="color: #20807d;">{id}</span>/fields</td>
             <td>:white_check_mark:</td>
@@ -127,13 +127,13 @@
             <td>:white_check_mark:</td>
         </tr>
         <tr>
-            <td>Get a record's file</td>
+            <td>Get a record file</td>
             <td style="text-align: center;"><span style="border-radius: 20px; display: inline-block; padding-left: 8px; padding-right: 8px; text-align: center; background-color: #6ad0dd; color: #383838;  font-weight: bold;">GET</span></td>
             <td>/v1/records/<span style="color: #20807d;">{id}</span>/file/<span style="color: #20807d;">{fieldId}</span></td>
             <td>:first_quarter_moon:</td>
         </tr>
         <tr>
-            <td>Create a record's file</td>
+            <td>Create a record file</td>
             <td style="text-align: center;"><span style="border-radius: 20px; display: inline-block; padding-left: 8px; padding-right: 8px; text-align: center; background-color: #20807D; color: #FFFFFF; font-weight: bold;">POST</span></td>
             <td>/v1/records/<span style="color: #20807d;">{id}</span>/file/<span style="color: #20807d;">{fieldId}</span></td>
             <td>:first_quarter_moon:</td>
@@ -146,6 +146,34 @@
         </tr>
     </tbody>
 </table>
+
+## Test the node
+You can test your node as you build it by running it in a local n8n instance.
+
+### Install n8n using npm
+```bash
+npm install n8n -g
+```
+
+### Clone git repository
+```bash
+git clone https://github.com/BuildForCare/n8n-nodes-ksaar.git
+cd n8n-nodes-ksaar/
+```
+
+### Publish it locally
+```bash
+# In the node directory
+npm run build
+npm link
+```
+
+### Install the node into your local n8n instance
+```bash
+# In the nodes directory within your n8n installation
+npm link n8n-nodes-ksaar
+```
+> Make sure you run <b>npm link n8n-nodes-ksaar</b> in the nodes directory within your n8n installation. This is probably something like <b>~/.n8n/nodes/</b>
 
 ## More information
 
