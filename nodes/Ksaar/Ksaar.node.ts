@@ -820,21 +820,21 @@ export class Ksaar implements INodeType {
                         value: 'delete_file',
                         action: 'Delete a record file',
                     },
-                    {
-                        name: 'Get a Record',
-                        value: 'get',
-                        action: 'Get a record',
-                    },
-                    {
-                        name: 'Get a Record File',
-                        value: 'get_file',
-                        action: 'Get a record file',
-                    },
-                    {
-                        name: 'Update a Record',
-                    	value: 'update',
-                    	action: 'Update a record',
-                    },
+                    // {
+                    //     name: 'Get a Record',
+                    //     value: 'get',
+                    //     action: 'Get a record',
+                    // },
+                    // {
+                    //     name: 'Get a Record File',
+                    //     value: 'get_file',
+                    //     action: 'Get a record file',
+                    // },
+                    // {
+                    //     name: 'Update a Record',
+                    // 	value: 'update',
+                    // 	action: 'Update a record',
+                    // },
                     // {
                     //     name: 'Update a record file',
                     // 	value: 'update_file',

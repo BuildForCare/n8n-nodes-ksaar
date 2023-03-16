@@ -33,7 +33,8 @@
       "dist/credentials/KsaarApi.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/Ksaar/Ksaar.node.js"
+      "dist/nodes/Ksaar/Ksaar.node.js",
+      "dist/nodes/Ksaar/KsaarTrigger.node.js"
     ]
   },
   "devDependencies": {

@@ -1,7 +1,8 @@
 import {
 	IExecuteFunctions,
 	IHookFunctions,
-	ILoadOptionsFunctions
+	ILoadOptionsFunctions,
+	IWebhookFunctions
 } from 'n8n-core';
 
 import {
@@ -21,7 +22,7 @@ import {
  */
 
 export async function KsaarApiAuth(
-	this: IHookFunctions | IExecuteFunctions | ILoadOptionsFunctions): Promise<any> {
+	this: IHookFunctions | IExecuteFunctions | ILoadOptionsFunctions | IWebhookFunctions): Promise<any> {
 
 	const credentials = await this.getCredentials('ksaarApi');
 
@@ -33,7 +34,7 @@ export async function KsaarApiAuth(
 	}
 
 export async function KsaarRequest(
-	this: IExecuteFunctions | ILoadOptionsFunctions,
+	this: IExecuteFunctions | ILoadOptionsFunctions | IWebhookFunctions,
 	method: string,
 	endpoint: string,
 	body: IDataObject = {}
@@ -51,8 +52,6 @@ export async function KsaarRequest(
 		uri: `https://api.ksaar.co/v1${endpoint}`,
 		json: true,
 	};
-
-	console.log(options);
 
 	try { 
 		return await this.helpers.request!.call(this, options);
