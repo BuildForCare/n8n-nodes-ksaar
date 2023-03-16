@@ -4,6 +4,8 @@
 
 ## Features
 
+### API
+
 <!-- <style>
     .method-get {
         border-radius: 20px; display: inline-block; padding-left: 8px; padding-right: 8px; text-align: center; background-color: #6ad0dd; color: #383838;  font-weight: bold;
@@ -143,6 +145,49 @@
             <td style="text-align: center;"><span style="border-radius: 20px; display: inline-block; padding-left: 8px; padding-right: 8px; text-align: center; background-color: #F04419; color: #FFFFFF; font-weight: bold;">DELETE</span></td>
             <td>/v1/records/<span style="color: #20807d;">{id}</span>/file/<span style="color: #20807d;">{fieldId}</span>/<span style="color: #20807d;">{fileId}</span></td>
             <td>:first_quarter_moon:</td>
+        </tr>
+    </tbody>
+</table>
+
+### Trigger
+Triger nodes are webkooks.
+Events added and update return the record value and envent deleted return record id.<br>
+Your request need to be added in your Ksaar workflow.<br>
+You need to add <b>x-auth</b> parameter in your hearder request.
+<table style="width: 100%">
+    <header>
+        <tr>
+            <td><b>Name</b></td>
+            <td style="text-align: center;"><b>Method</b></td>
+            <td><b>Header</b></td>
+            <td>Response</td>
+        </tr>
+    </header>
+    <tbody>
+        <tr>
+            <td>Row Added</td>
+            <td style="text-align: center;"><span style="border-radius: 20px; display: inline-block; padding-left: 8px; padding-right: 8px; text-align: center; background-color: #20807D; color: #FFFFFF; font-weight: bold;">POST</span></td>
+            <td>x-auth</td>
+            <td>The record added</td>
+        </tr>
+        <tr>
+            <td>Row Updated</td>
+            <td style="text-align: center;"><span style="border-radius: 20px; display: inline-block; padding-left: 8px; padding-right: 8px; text-align: center; background-color: #20807D; color: #FFFFFF; font-weight: bold;">POST</span></td>
+            <td>x-auth</td>
+            <td>The record updated</td>
+        </tr>
+        <tr>
+            <td>Row Deleted</td>
+            <td style="text-align: center;"><span style="border-radius: 20px; display: inline-block; padding-left: 8px; padding-right: 8px; text-align: center; background-color: #20807D; color: #FFFFFF; font-weight: bold;">POST</span></td>
+            <td>x-auth</td>
+            <td>
+                The record id : <br>
+                <code>
+                    {
+                        "rowId": &lt;record id&gt;
+                    }
+                </code>
+            </td>
         </tr>
     </tbody>
 </table>
