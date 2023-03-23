@@ -42,13 +42,13 @@
             <td colspan="4">Users</td>
         </tr>
         <tr>
-            <td>Get a user information</td>
+            <td>Get user information</td>
             <td style="text-align: center;"><span style="border-radius: 20px; display: inline-block; padding-left: 8px; padding-right: 8px; text-align: center; background-color: #6ad0dd; color: #383838;  font-weight: bold;">GET</span></td>
             <td>/v1/users/<span style="color: #20807d;">{id}</span></td>
             <td>:white_check_mark:</td>
         </tr>
         <tr>
-            <td>Update a user information</td>
+            <td>Update user information</td>
             <td style="text-align: center;"><span style="border-radius: 20px; display: inline-block; padding-left: 8px; padding-right: 8px; text-align: center; background-color: #20807D; color: #FFFFFF; font-weight: bold;">PATCH</span></td>
             <td>/v1/users/<span style="color: #20807d;">{id}</span></td>
             <td>:first_quarter_moon:</td>
@@ -105,43 +105,43 @@
             <td colspan="4">Records</td>
         </tr>
         <tr>
-            <td>Get a record</td>
+            <td>Get record</td>
             <td style="text-align: center;"><span style="border-radius: 20px; display: inline-block; padding-left: 8px; padding-right: 8px; text-align: center; background-color: #6ad0dd; color: #383838;  font-weight: bold;">GET</span></td>
             <td>/v1/records/<span style="color: #20807d;">{id}</span></td>
             <td>:white_check_mark:</td>
         </tr>
         <tr>
-            <td>Create a record</td>
+            <td>Create record</td>
             <td style="text-align: center;"><span style="border-radius: 20px; display: inline-block; padding-left: 8px; padding-right: 8px; text-align: center; background-color: #20807D; color: #FFFFFF; font-weight: bold;">POST</span></td>
             <td>/v1/workflows/<span style="color: #20807d;">{id}</span>/records</td>
             <td>:white_check_mark:</td>
         </tr>
         <tr>
-            <td>Update a record</td>
+            <td>Update record</td>
             <td style="text-align: center;"><span style="border-radius: 20px; display: inline-block; padding-left: 8px; padding-right: 8px; text-align: center; background-color: #20807D; color: #FFFFFF; font-weight: bold;">PATCH</span></td>
             <td>/v1/records/<span style="color: #20807d;">{id}</span></td>
             <td>:white_check_mark:</td>
         </tr>
         <tr>
-            <td>Delete a record</td>
+            <td>Delete record</td>
             <td style="text-align: center;"><span style="border-radius: 20px; display: inline-block; padding-left: 8px; padding-right: 8px; text-align: center; background-color: #F04419; color: #FFFFFF; font-weight: bold;">DELETE</span></td>
             <td>/v1/records/<span style="color: #20807d;">{id}</span></td>
             <td>:white_check_mark:</td>
         </tr>
         <tr>
-            <td>Get a record file</td>
+            <td>Get record file</td>
             <td style="text-align: center;"><span style="border-radius: 20px; display: inline-block; padding-left: 8px; padding-right: 8px; text-align: center; background-color: #6ad0dd; color: #383838;  font-weight: bold;">GET</span></td>
             <td>/v1/records/<span style="color: #20807d;">{id}</span>/file/<span style="color: #20807d;">{fieldId}</span></td>
             <td>:first_quarter_moon:</td>
         </tr>
         <tr>
-            <td>Create a record file</td>
+            <td>Create record file</td>
             <td style="text-align: center;"><span style="border-radius: 20px; display: inline-block; padding-left: 8px; padding-right: 8px; text-align: center; background-color: #20807D; color: #FFFFFF; font-weight: bold;">POST</span></td>
             <td>/v1/records/<span style="color: #20807d;">{id}</span>/file/<span style="color: #20807d;">{fieldId}</span></td>
             <td>:first_quarter_moon:</td>
         </tr>
         <tr>
-            <td>Delete a record'file</td>
+            <td>Delete record'file</td>
             <td style="text-align: center;"><span style="border-radius: 20px; display: inline-block; padding-left: 8px; padding-right: 8px; text-align: center; background-color: #F04419; color: #FFFFFF; font-weight: bold;">DELETE</span></td>
             <td>/v1/records/<span style="color: #20807d;">{id}</span>/file/<span style="color: #20807d;">{fieldId}</span>/<span style="color: #20807d;">{fileId}</span></td>
             <td>:first_quarter_moon:</td>
@@ -150,10 +150,10 @@
 </table>
 
 ### Trigger
-Triger nodes are webkooks.
-Events added and update return the record value and envent deleted return record id.<br>
+Trigger nodes are webhooks.<br />
+Events added and updates return the record value and events deleted return record id.<br>
 Your request need to be added in your Ksaar workflow.<br>
-You need to add <b>x-auth</b> parameter in your hearder request.
+You need to add <b>x-auth</b> parameter in your header request.
 <table style="width: 100%">
     <caption>:white_check_mark: Done&nbsp;&nbsp;&nbsp;&nbsp;:x: Not planned&nbsp;&nbsp;&nbsp;&nbsp;:first_quarter_moon: Planned</caption>
     <header>
