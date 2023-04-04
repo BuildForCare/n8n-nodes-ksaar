@@ -649,6 +649,111 @@ export class Ksaar implements INodeType {
                 required: true,
 			},
             {
+                displayName: 'Sort By',
+				name: 'sort_by',
+				type: 'options',
+				noDataExpression: true,
+				displayOptions: {
+                    show: {
+						resource: ['workflows'],
+                        operation: ['get_records'],
+					},
+				},
+				options: [
+					{
+						name: 'Created At',
+						value: 'createdAt',
+					},
+					{
+						name: 'Updated At',
+						value: 'updatedAt',
+					},
+                ],
+				default: 'createdAt',
+                required: true,
+			},
+			{
+				displayName: 'Return All',
+				name: 'returnAll',
+				type: 'boolean',
+				displayOptions: {
+					show: {
+						resource: ['workflows'],
+						operation: ['get_records'],
+					},
+				},
+				default: false,
+				// eslint-disable-next-line n8n-nodes-base/node-param-description-wrong-for-return-all
+				description: 'Whether to return all results or use pagination',
+			},
+            {
+				displayName: 'Filters',
+				name: 'filters',
+				type: 'fixedCollection',
+                placeholder: 'Add a filter',
+                typeOptions: {
+                    multipleValues: true,
+                },
+                options: [
+                    {
+                        name: 'filtersValues',
+                        displayName: 'Filter',
+                        values: [
+                            {
+                                displayName: 'Field',
+                                name: 'field_name',
+                                type: 'resourceLocator',
+                                modes: [
+                                    {
+                                        displayName: 'Field',
+                                        name: 'list',
+                                        type: 'list',
+                                        placeholder: 'Select a field...',
+                                        typeOptions: {
+                                            searchListMethod: 'fieldSearch',
+                                            searchable: true,
+                                        },
+                                    },
+                                    {
+                                        displayName: 'ID',
+                                        name: 'id',
+                                        type: 'string',
+                                        placeholder: '4ba0bc35-3ace-4f1d-a877-b5a94619029d',
+                                        validation: [
+                                            {
+                                                type: 'regex',
+                                                properties: {
+                                                    regex: '[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}',
+                                                    errorMessage: 'Not a valid ID',
+                                                },
+                                            },
+                                        ],
+                                    },
+                                ],
+                                default: { mode: 'list', value: '' },
+                                required: true,
+                            },
+                            {
+                                displayName: 'Value',
+                                name: 'value',
+                                type: 'string',
+                                default: '',
+                                description: 'Value to set for the field key',
+                                required: true,
+                            },
+                        ],
+                    },
+                ],
+				displayOptions: {
+					show: {
+						resource: ['workflows'],
+                        operation: ['get_records'],
+						returnAll: [true],
+					},
+				},
+				default: {},
+			},
+            {
 				displayName: 'Results per Page',
 				name: 'results_per_page',
 				type: 'number',
@@ -659,7 +764,8 @@ export class Ksaar implements INodeType {
 				displayOptions: {
 					show: {
 						resource: ['workflows'],
-                        operation: ['get_records']
+                        operation: ['get_records'],
+						returnAll: [false],
 					},
 				},
 				default: 100,
@@ -675,34 +781,11 @@ export class Ksaar implements INodeType {
 				displayOptions: {
                     show: {
 						resource: ['workflows'],
-                        operation: ['get_records']
+                        operation: ['get_records'],
+						returnAll: [false],
 					},
 				},
 				default: 1,
-                required: true,
-			},
-            {
-                displayName: 'Sort By',
-				name: 'sort_by',
-				type: 'options',
-				noDataExpression: true,
-				displayOptions: {
-                    show: {
-						resource: ['workflows'],
-                        operation: ['get_records']
-					},
-				},
-				options: [
-					{
-						name: 'Created At',
-						value: 'createdAt',
-					},
-					{
-						name: 'Updated At',
-						value: 'updatedAt',
-					},
-                ],
-				default: 'createdAt',
                 required: true,
 			},
 
@@ -815,26 +898,26 @@ export class Ksaar implements INodeType {
                         value: 'delete',
                         action: 'Delete a record',
                     },
-                    {
-                        name: 'Delete a Record File',
-                        value: 'delete_file',
-                        action: 'Delete a record file',
-                    },
                     // {
-                    //     name: 'Get a Record',
-                    //     value: 'get',
-                    //     action: 'Get a record',
+                    //     name: 'Delete a Record File',
+                    //     value: 'delete_file',
+                    //     action: 'Delete a record file',
                     // },
+                    {
+                        name: 'Get a Record',
+                        value: 'get',
+                        action: 'Get a record',
+                    },
                     // {
                     //     name: 'Get a Record File',
                     //     value: 'get_file',
                     //     action: 'Get a record file',
                     // },
-                    // {
-                    //     name: 'Update a Record',
-                    // 	value: 'update',
-                    // 	action: 'Update a record',
-                    // },
+                    {
+                        name: 'Update a Record',
+                    	value: 'update',
+                    	action: 'Update a record',
+                    },
                     // {
                     //     name: 'Update a record file',
                     // 	value: 'update_file',
@@ -1660,12 +1743,42 @@ export class Ksaar implements INodeType {
             if (resource === 'workflows') {
                 if (operation === 'get_records') {
                     const workflow_id = this.getNodeParameter('workflow_id', 0) as any;
-                    const results_per_page = this.getNodeParameter('results_per_page', 0) as string;
-                    const page_number = this.getNodeParameter('page_number', 0) as string;
-                    const sort_by = this.getNodeParameter('sort_by', 0) as string;
-                    const endpoint = `/workflows/${workflow_id.value}/records?page=${page_number}&limit=${results_per_page}&sortBy=${sort_by}`;
-                    const body: IDataObject = {};
-                    responseData = await KsaarRequest.call(this, 'GET', endpoint, body);
+                    const returnAll = this.getNodeParameter('returnAll', 0) as any;
+					const sort_by = this.getNodeParameter('sort_by', 0) as string;
+
+					if(returnAll) {
+						const filters = this.getNodeParameter('filters', 0) as any;
+						let page_number = 1;
+
+						let endpoint = '';
+						const body: IDataObject = {};
+						let resultData = {
+							results: []
+						};
+
+						do {
+							endpoint = `/workflows/${workflow_id.value}/records?page=${page_number}&limit=500&sortBy=${sort_by}`;
+							resultData = await KsaarRequest.call(this, 'GET', endpoint, body);
+							let results = resultData.results.map((r: any) => {
+								return r;
+							});
+							if(filters.filtersValues !== undefined) {
+								for(let filter of filters.filtersValues) {
+									results = results.filter((r: any) => r[filter.field_name.cachedResultName] == filter.value);
+								}
+							}
+							responseData = [...responseData, ...results] as never[];
+							page_number ++;
+
+						} while (resultData.results.length != 0);
+
+					} else {
+						const results_per_page = this.getNodeParameter('results_per_page', 0) as string;
+						const page_number = this.getNodeParameter('page_number', 0) as string;
+						const endpoint = `/workflows/${workflow_id.value}/records?page=${page_number}&limit=${results_per_page}&sortBy=${sort_by}`;
+						const body: IDataObject = {};
+						responseData = await KsaarRequest.call(this, 'GET', endpoint, body);
+					}
                 }
                 else if (operation === 'get_fields') {
                     const workflow_id = this.getNodeParameter('workflow_id', 0) as any;
