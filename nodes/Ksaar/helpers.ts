@@ -21,6 +21,18 @@ import {
  * @returns {Promise<any>}
  */
 
+interface Headers {
+	[key: string]: string
+}
+
+interface Options {
+	headers: Headers,
+	method: any,
+	body: any,
+	uri: string,
+	json: boolean,
+}
+
 export async function KsaarApiAuth(
 	this: IHookFunctions | IExecuteFunctions | ILoadOptionsFunctions | IWebhookFunctions): Promise<any> {
 
@@ -42,7 +54,7 @@ export async function KsaarRequest(
 
 	const auth = await KsaarApiAuth.call(this);
 
-	const options = {
+	const options: Options = {
 		headers: {
             'Content-Type': 'application/json',
             'Authorization': auth
@@ -52,6 +64,16 @@ export async function KsaarRequest(
 		uri: `https://api.ksaar.co/v1${endpoint}`,
 		json: true,
 	};
+
+	
+	const sendHeaders = this.getNodeParameter('sendHeaders', 0) as any;
+	
+	if(sendHeaders) {
+		const headers = this.getNodeParameter('headers', 0) as any;
+		for(let header of headers.HeadersValues) {
+			options["headers"][header.name as string] = header.value as string;
+		}
+	}
 
 	try { 
 		return await this.helpers.request!.call(this, options);

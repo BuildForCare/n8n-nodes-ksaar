@@ -49,13 +49,57 @@ export class Ksaar implements INodeType {
             {
                 name: 'ksaarApi',
                 required: true,
-            }
+            },
         ],
         requestDefaults: {
             baseURL: 'https://api.ksaar.co/v1',
         },
 		properties: [
 		// Resources and operations will go here
+            {
+                displayName: 'Send Headers',
+                name: 'sendHeaders',
+                type: 'boolean',
+                default: false,
+            },
+            {
+				displayName: 'Headers',
+				name: 'headers',
+				type: 'fixedCollection',
+                placeholder: 'Add a header',
+                typeOptions: {
+                    multipleValues: true,
+                },
+                options: [
+                    {
+                        name: 'HeadersValues',
+                        displayName: 'Headers',
+                        values: [
+                            {
+                                displayName: 'Header',
+                                name: 'name',
+                                type: 'string',
+                                default: '',
+                                required: true,
+                            },
+                            {
+                                displayName: 'Value',
+                                name: 'value',
+                                type: 'string',
+                                default: '',
+                                required: true,
+                            },
+                        ],
+                    },
+                ],
+				displayOptions: {
+					show: {
+						sendHeaders: [true],
+					},
+				},
+				default: {},
+			},
+
             {
                 displayName: 'Resource',
                 name: 'resource',
@@ -180,6 +224,20 @@ export class Ksaar implements INodeType {
 			// ----------------------------------
 			//         operations:Applications:Get
 			// ----------------------------------
+			{
+				displayName: 'Return All',
+				name: 'returnAll',
+				type: 'boolean',
+				displayOptions: {
+					show: {
+						resource: ['applications'],
+						operation: ['get'],
+					},
+				},
+				default: false,
+				// eslint-disable-next-line n8n-nodes-base/node-param-description-wrong-for-return-all
+				description: 'Whether to return all results or use pagination',
+			},
             {
 				displayName: 'Results per Page',
 				name: 'results_per_page',
@@ -191,7 +249,8 @@ export class Ksaar implements INodeType {
 				displayOptions: {
 					show: {
 						resource: ['applications'],
-                        operation: ['get']
+                        operation: ['get'],
+						returnAll: [false]
 					},
 				},
 				default: 100,
@@ -207,7 +266,8 @@ export class Ksaar implements INodeType {
 				displayOptions: {
                     show: {
 						resource: ['applications'],
-                        operation: ['get']
+                        operation: ['get'],
+						returnAll: [false]
 					},
 				},
 				default: 1,
@@ -221,7 +281,7 @@ export class Ksaar implements INodeType {
 				displayOptions: {
                     show: {
 						resource: ['applications'],
-                        operation: ['get']
+                        operation: ['get'],
 					},
 				},
 				options: [
@@ -280,6 +340,20 @@ export class Ksaar implements INodeType {
 				default: { mode: 'list', value: '' },
                 required: true,
 			},
+			{
+				displayName: 'Return All',
+				name: 'returnAll',
+				type: 'boolean',
+				displayOptions: {
+					show: {
+						resource: ['applications'],
+						operation: ['workflows'],
+					},
+				},
+				default: false,
+				// eslint-disable-next-line n8n-nodes-base/node-param-description-wrong-for-return-all
+				description: 'Whether to return all results or use pagination',
+			},
             {
 				displayName: 'Results per Page',
 				name: 'results_per_page',
@@ -291,7 +365,8 @@ export class Ksaar implements INodeType {
 				displayOptions: {
 					show: {
 						resource: ['applications'],
-                        operation: ['workflows']
+                        operation: ['workflows'],
+						returnAll: [false]
 					},
 				},
 				default: 100,
@@ -307,7 +382,8 @@ export class Ksaar implements INodeType {
 				displayOptions: {
                     show: {
 						resource: ['applications'],
-                        operation: ['workflows']
+                        operation: ['workflows'],
+						returnAll: [false]
 					},
 				},
 				default: 1,
@@ -1697,21 +1773,70 @@ export class Ksaar implements INodeType {
             // ------------------------
             if (resource === 'applications') {
                 if (operation === 'get') {
-                    const results_per_page = this.getNodeParameter('results_per_page', 0) as string;
-                    const page_number = this.getNodeParameter('page_number', 0) as string;
-                    const sort_by = this.getNodeParameter('sort_by', 0) as string;
-                    const endpoint = `/applications?page=${page_number}&limit=${results_per_page}&sortBy=${sort_by}`;
-                    const body: IDataObject = {};
-                    responseData = await KsaarRequest.call(this, 'GET', endpoint, body);
+                    const returnAll = this.getNodeParameter('returnAll', 0) as any;
+					const sort_by = this.getNodeParameter('sort_by', 0) as string;
+
+					if(returnAll) {
+						let page_number = 1;
+
+						let endpoint = '';
+						const body: IDataObject = {};
+						let resultData = {
+							results: []
+						};
+
+						do {
+							endpoint = `/applications?page=${page_number}&limit=500&sortBy=${sort_by}`;
+							resultData = await KsaarRequest.call(this, 'GET', endpoint, body);
+							let results = resultData.results.map((r: any) => {
+								return r;
+							});
+							responseData = [...responseData, ...results] as never[];
+							page_number ++;
+
+						} while (resultData.results.length != 0);
+
+
+					} else {
+						const results_per_page = this.getNodeParameter('results_per_page', 0) as string;
+						const page_number = this.getNodeParameter('page_number', 0) as string;
+						const endpoint = `/applications?page=${page_number}&limit=${results_per_page}&sortBy=${sort_by}`;
+						const body: IDataObject = {};
+						responseData = await KsaarRequest.call(this, 'GET', endpoint, body);
+					}
                 }
                 else if (operation === 'workflows') {
+                    const returnAll = this.getNodeParameter('returnAll', 0) as any;
                     const application_id = this.getNodeParameter('application_id', 0) as any;
-                    const results_per_page = this.getNodeParameter('results_per_page', 0) as string;
-                    const page_number = this.getNodeParameter('page_number', 0) as string;
                     const sort_by = this.getNodeParameter('sort_by', 0) as string;
-                    const endpoint = `/applications/${application_id.value}/workflows?page=${page_number}&limit=${results_per_page}&sortBy=${sort_by}`;
-                    const body: IDataObject = {};
-                    responseData = await KsaarRequest.call(this, 'GET', endpoint, body);
+
+					if(returnAll) {
+						let page_number = 1;
+
+						let endpoint = '';
+						const body: IDataObject = {};
+						let resultData = {
+							results: []
+						};
+
+						do {
+							endpoint = `/applications/${application_id.value}/workflows?page=${page_number}&limit=500&sortBy=${sort_by}`;
+							resultData = await KsaarRequest.call(this, 'GET', endpoint, body);
+							let results = resultData.results.map((r: any) => {
+								return r;
+							});
+							responseData = [...responseData, ...results] as never[];
+							page_number ++;
+
+						} while (resultData.results.length != 0);
+
+					} else {
+						const results_per_page = this.getNodeParameter('results_per_page', 0) as string;
+						const page_number = this.getNodeParameter('page_number', 0) as string;
+						const endpoint = `/applications/${application_id.value}/workflows?page=${page_number}&limit=${results_per_page}&sortBy=${sort_by}`;
+						const body: IDataObject = {};
+						responseData = await KsaarRequest.call(this, 'GET', endpoint, body);
+					}
                 }
                 else if (operation === 'users') {
                     const application_id = this.getNodeParameter('application_id', 0) as any;
