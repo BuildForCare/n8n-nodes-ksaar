@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-ksaar",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Node for Ksaar app",
   "keywords": [
     "n8n-community-node-package"
