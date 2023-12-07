@@ -47,7 +47,8 @@ export async function KsaarRequest(
 	method: string,
 	endpoint: string,
 	body: IDataObject = {},
-	contentType: string = 'application/json'
+	contentType: string = 'application/json',
+	i: number = 0
 ):  Promise<any> {
 
 	const auth = await KsaarApiAuth.call(this);

@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-ksaar",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "description": "Node for Ksaar app",
   "keywords": [
     "n8n-community-node-package"
@@ -33,8 +33,7 @@
       "dist/credentials/KsaarApi.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/Ksaar/Ksaar.node.js",
-      "dist/nodes/Ksaar/KsaarTrigger.node.js"
+      "dist/nodes/Ksaar/Ksaar.node.js"
     ]
   },
   "devDependencies": {
