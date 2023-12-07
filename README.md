@@ -132,13 +132,13 @@
             <td>Get record file</td>
             <td style="text-align: center;"><span style="border-radius: 20px; display: inline-block; padding-left: 8px; padding-right: 8px; text-align: center; background-color: #6ad0dd; color: #383838;  font-weight: bold;">GET</span></td>
             <td>/v1/records/<span style="color: #20807d;">{id}</span>/file/<span style="color: #20807d;">{fieldId}</span></td>
-            <td>:first_quarter_moon:</td>
+            <td>:x:</td>
         </tr>
         <tr>
-            <td>Create record file</td>
+            <td>Upload record file</td>
             <td style="text-align: center;"><span style="border-radius: 20px; display: inline-block; padding-left: 8px; padding-right: 8px; text-align: center; background-color: #20807D; color: #FFFFFF; font-weight: bold;">POST</span></td>
             <td>/v1/records/<span style="color: #20807d;">{id}</span>/file/<span style="color: #20807d;">{fieldId}</span></td>
-            <td>:first_quarter_moon:</td>
+            <td>:white_check_mark:</td>
         </tr>
         <tr>
             <td>Delete record'file</td>
