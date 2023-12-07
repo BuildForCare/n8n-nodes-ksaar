@@ -1,23 +1,20 @@
-import {
-    //IHookFunctions,
-    IWebhookFunctions,
- } from 'n8n-core';
- 
+
  import {
-    IDataObject,
-    INodeExecutionData,
-    INodeType,
-    INodeTypeDescription,
-    IWebhookResponseData,
+	IWebhookFunctions,
+	IDataObject,
+	INodeExecutionData,
+	INodeType,
+	INodeTypeDescription,
+	IWebhookResponseData,
 	NodeApiError,
  } from 'n8n-workflow';
- 
+
 
 import {
     KsaarRequest
 } from './helpers';
- 
- 
+
+
  export class KsaarTrigger implements INodeType {
     description: INodeTypeDescription = {
         displayName: 'Ksaar Trigger',
@@ -96,20 +93,20 @@ import {
 
         if(event === "rowAdded") {
             const data = this.getBodyData();
-            
+
             const endpoint = `/records/${data.rowId}`;
             const body: IDataObject = {};
-            
+
             responseData = await KsaarRequest.call(this, 'GET', endpoint, body);
             workflowData = this.helpers.returnJsonArray(responseData);
-            
+
         }
         else if(event === "rowUpdated") {
             const data = this.getBodyData();
-    
+
             const endpoint = `/records/${data.rowId}`;
             const body: IDataObject = {};
-            
+
             responseData = await KsaarRequest.call(this, 'GET', endpoint, body);
             workflowData = this.helpers.returnJsonArray(responseData);
         }
@@ -121,7 +118,7 @@ import {
                 }
             ];
             workflowData = this.helpers.returnJsonArray(responseData);
-            
+
         }
 
 	    return {

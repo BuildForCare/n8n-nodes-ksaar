@@ -1,15 +1,13 @@
 /* eslint-disable n8n-nodes-base/node-param-resource-with-plural-option */
-import {
-    IExecuteFunctions,
-} from 'n8n-core';
 
 import {
-    INodeExecutionData,
-    INodeType,
-    INodeTypeDescription,
-    IDataObject,
-    // ILoadOptionsFunctions,
-    // INodeListSearchResult
+	IExecuteFunctions,
+	INodeExecutionData,
+	INodeType,
+	INodeTypeDescription,
+	IDataObject,
+	// ILoadOptionsFunctions,
+	// INodeListSearchResult
 } from 'n8n-workflow';
 
 import {
@@ -33,7 +31,7 @@ export class Ksaar implements INodeType {
 	description: INodeTypeDescription = {
 		// Basic node details will go here
         displayName: 'Ksaar',
-        name: 'Ksaar',
+        name: 'ksaar',
         // eslint-disable-next-line n8n-nodes-base/node-class-description-icon-not-svg
         icon: 'file:ksaar.png',
         group: ['transform'],
@@ -125,7 +123,7 @@ export class Ksaar implements INodeType {
                 ],
                 default: 'users',
             },
-            
+
 			// ----------------------------------
 			//         operations:Users
 			// ----------------------------------
@@ -173,7 +171,7 @@ export class Ksaar implements INodeType {
                 required: true,
 			},
 
-            
+
 			// ----------------------------------
 			//         operations:Applications
 			// ----------------------------------
@@ -613,7 +611,7 @@ export class Ksaar implements INodeType {
 				default: { mode: 'list', value: '' },
                 required: true,
 			},
-            
+
 			// ----------------------------------
 			//         operations:Workflows
 			// ----------------------------------
@@ -949,7 +947,7 @@ export class Ksaar implements INodeType {
                 required: true,
 			},
 
-            
+
 			// ----------------------------------
 			//         operations:Records
 			// ----------------------------------
@@ -990,15 +988,15 @@ export class Ksaar implements INodeType {
                     //     action: 'Get a record file',
                     // },
                     {
-                        name: 'Update a Record',
-                    	value: 'update',
-                    	action: 'Update a record',
+												name: 'Update a Record',
+												value: 'update',
+												action: 'Update a record',
                     },
-                    // {
-                    //     name: 'Update a record file',
-                    // 	value: 'update_file',
-                    // 	action: 'Update a record file',
-                    // },
+                    {
+												name: 'Update a Record File',
+												value: 'update_file',
+												action: 'Update a record file',
+                    },
 				],
 				default: 'get',
 			},
@@ -1021,7 +1019,7 @@ export class Ksaar implements INodeType {
                 required: true,
 			},
 
-            
+
 			// ----------------------------------
 			//         operations:Record:Create a Record
 			// ----------------------------------
@@ -1437,7 +1435,7 @@ export class Ksaar implements INodeType {
 			// ----------------------------------
 			//         operations:Records:Get File
 			// ----------------------------------
-            
+
             {
 				displayName: 'Application',
 				name: 'application_id',
@@ -1574,10 +1572,149 @@ export class Ksaar implements INodeType {
 			},
 
 			// ----------------------------------
+			//         operations:Records:Update File
+			// ----------------------------------
+
+            {
+				displayName: 'Application',
+				name: 'application_id',
+				type: 'resourceLocator',
+                modes: [
+					{
+						displayName: 'Application',
+						name: 'list',
+						type: 'list',
+						placeholder: 'Select an application...',
+						typeOptions: {
+							searchListMethod: 'applicationSearch',
+							searchable: true,
+						},
+					},
+					{
+						displayName: 'ID',
+						name: 'id',
+						type: 'string',
+						placeholder: '4ba0bc35-3ace-4f1d-a877-b5a94619029d',
+						validation: [
+							{
+								type: 'regex',
+								properties: {
+									regex: '[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}',
+									errorMessage: 'Not a valid ID',
+								},
+							},
+						],
+					},
+				],
+				displayOptions: {
+					show: {
+						resource: ['records'],
+                        operation: ['update_file']
+					},
+				},
+				default: { mode: 'list', value: '' },
+                required: true,
+			},
+            {
+				displayName: 'Workflow',
+				name: 'workflow_id',
+				type: 'resourceLocator',
+                modes: [
+					{
+						displayName: 'Workflow',
+						name: 'list',
+						type: 'list',
+						placeholder: 'Select a workflow...',
+						typeOptions: {
+							searchListMethod: 'workflowSearch',
+							searchable: true,
+						},
+					},
+					{
+						displayName: 'ID',
+						name: 'id',
+						type: 'string',
+						placeholder: '4ba0bc35-3ace-4f1d-a877-b5a94619029d',
+						validation: [
+							{
+								type: 'regex',
+								properties: {
+									regex: '[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}',
+									errorMessage: 'Not a valid ID',
+								},
+							},
+						],
+					},
+				],
+				displayOptions: {
+					show: {
+						resource: ['records'],
+                        operation: ['update_file']
+					},
+				},
+				default: { mode: 'list', value: '' },
+                required: true,
+			},
+            {
+				displayName: 'Field',
+				name: 'field_id',
+				type: 'resourceLocator',
+                modes: [
+					{
+						displayName: 'Field',
+						name: 'list',
+						type: 'list',
+						placeholder: 'Select a field...',
+						typeOptions: {
+							searchListMethod: 'fileFieldSearch',
+							searchable: true,
+						},
+					},
+					{
+						displayName: 'ID',
+						name: 'id',
+						type: 'string',
+						placeholder: '4ba0bc35-3ace-4f1d-a877-b5a94619029d',
+						validation: [
+							{
+								type: 'regex',
+								properties: {
+									regex: '[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}',
+									errorMessage: 'Not a valid ID',
+								},
+							},
+						],
+					},
+				],
+				displayOptions: {
+					show: {
+						resource: ['records'],
+                        operation: ['update_file']
+					},
+				},
+				default: { mode: 'list', value: '' },
+                required: true,
+			},
+            {
+                displayName: 'Record ID',
+				name: 'record_id',
+				type: 'string',
+                placeholder: '4ba0bc35-3ace-4f1d-a877-b5a94619029d',
+				displayOptions: {
+                    show: {
+						resource: ['records'],
+                        operation: ['update_file']
+					},
+				},
+				default: '',
+                required: true,
+			},
+
+			// ----------------------------------
 			//         operations:Records:Delete File
 			// ----------------------------------
-            
-            {
+
+				{
 				displayName: 'Application',
 				name: 'application_id',
 				type: 'resourceLocator',
@@ -1728,7 +1865,7 @@ export class Ksaar implements INodeType {
 		]
 	};
 
-    
+
 	methods = {
 		listSearch: {
 			applicationSearch,
@@ -1742,10 +1879,10 @@ export class Ksaar implements INodeType {
     async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
 
         let responseData: IDataObject[] = [];
-    
+
             const resource = this.getNodeParameter('resource', 0) as string;
             const operation = this.getNodeParameter('operation', 0) as string;
-            
+
             // ------------------------
             //      USERS
             // ------------------------
@@ -1767,7 +1904,7 @@ export class Ksaar implements INodeType {
                 //     responseData = await KsaarRequest.call(this, 'PATCH', endpoint, body);
                 // }
             }
-            
+
             // ------------------------
             //      APPLICATIONS
             // ------------------------
@@ -1974,13 +2111,33 @@ export class Ksaar implements INodeType {
                     const body: IDataObject = {};
                     responseData = await KsaarRequest.call(this, 'GET', endpoint, body);
                 }
+                else if (operation === 'update_file') {
+                    const record_id = this.getNodeParameter('record_id', 0) as any;
+                    const field_id = this.getNodeParameter('field_id', 0) as any;
+                    const endpoint = `/records/${record_id}/files/${field_id.value}`;
+
+										const binaryData = this.helpers.assertBinaryData(0, "data");
+										const dataBuffer = await this.helpers.getBinaryDataBuffer(0, "data");
+
+                    const body: IDataObject = {};
+										body.qqfile = {
+											value: dataBuffer,
+											options: {
+												filename: binaryData.fileName,
+											},
+										};
+
+                    responseData = await KsaarRequest.call(this, 'POST', endpoint, body, 'multipart/form-data');
+
+
+                }
                 else if (operation === 'delete_file') {
                     const record_id = this.getNodeParameter('record_id', 0) as any;
                     const field_id = this.getNodeParameter('field_id', 0) as any;
                     const file_id = this.getNodeParameter('file_id', 0) as any;
                     const endpoint = `/records/${record_id}/files/${field_id.value}/${file_id}`;
                     const body: IDataObject = {};
-                    responseData = await KsaarRequest.call(this, 'DELETE', endpoint, body);
+                    responseData = await KsaarRequest.call(this, 'DELETE', endpoint, body, 'multipart/form-data');
                 }
             }
 

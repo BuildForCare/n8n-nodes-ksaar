@@ -2,10 +2,7 @@ import {
 	IExecuteFunctions,
 	IHookFunctions,
 	ILoadOptionsFunctions,
-	IWebhookFunctions
-} from 'n8n-core';
-
-import {
+	IWebhookFunctions,
 	NodeApiError,
 	NodeOperationError,
 	IDataObject
@@ -49,14 +46,15 @@ export async function KsaarRequest(
 	this: IExecuteFunctions | ILoadOptionsFunctions | IWebhookFunctions,
 	method: string,
 	endpoint: string,
-	body: IDataObject = {}
+	body: IDataObject = {},
+	contentType: string = 'application/json'
 ):  Promise<any> {
 
 	const auth = await KsaarApiAuth.call(this);
 
 	const options: Options = {
 		headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': contentType,
             'Authorization': auth
         },
 		method,
@@ -65,9 +63,9 @@ export async function KsaarRequest(
 		json: true,
 	};
 
-	
+
 	const sendHeaders = this.getNodeParameter('sendHeaders', 0) as any;
-	
+
 	if(sendHeaders) {
 		const headers = this.getNodeParameter('headers', 0) as any;
 		for(let header of headers.HeadersValues) {
@@ -75,7 +73,7 @@ export async function KsaarRequest(
 		}
 	}
 
-	try { 
+	try {
 		return await this.helpers.request!.call(this, options);
 	} catch (error) {
 		throw new NodeApiError(this.getNode(), error, { message: error.response.data.message});
