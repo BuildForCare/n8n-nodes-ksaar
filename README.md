@@ -1,4 +1,4 @@
-![Banner image](https://lh3.googleusercontent.com/u/0/drive-viewer/AAOQEOSeNdUThNQH37qD6ss68V2CSiammyZjbGmVobOqAaacS-6FM-QSiFTR9OHkFUUR0Ln77dbxadmuPA40P_bHbZQuamFpOg=w1920-h929)
+![Banner image](https://github.com/BuildForCare/n8n-nodes-ksaar/blob/main/baniere_bfc_ksaar_n8n.png?raw=true)
 
 # n8n-nodes-ksaar
 
